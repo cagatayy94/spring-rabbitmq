@@ -4,4 +4,5 @@ import dto.MessageRequest;
 
 public interface MessageService {
     void sendMessageToQueue(MessageRequest messageRequest);
+    void getMessageFromQueue(MessageRequest messageRequest);
 }

@@ -3,6 +3,7 @@ package com.cookbook.rabbitmq.service;
 import dto.MessageRequest;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,13 @@ public class MessageManager implements MessageService{
     @Override
     public void sendMessageToQueue(MessageRequest messageRequest) {
         this.amqpTemplate.convertAndSend(this.directExchange.getName(), this.routingKey, messageRequest);
+    }
+
+    @RabbitListener(queues = "${my.rabbitmq.queue}")
+    @Override
+    public void getMessageFromQueue(MessageRequest messageRequest) {
+        //this direct fetches message from queue
+        System.out.println("Fetching messages from queue");
+        System.out.println(messageRequest);
     }
 }
